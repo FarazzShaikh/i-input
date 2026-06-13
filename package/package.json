@@ -1,6 +1,6 @@
 {
   "name": "i-input",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Blender-style universal number input for React with scrubbing, expression evaluation, and unit support.",
   "license": "MIT",
   "author": {
@@ -39,15 +39,17 @@
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "sideEffects": false,
   "scripts": {
     "copy-license": "node -e \"require('fs').copyFileSync('../LICENSE','LICENSE')\"",
-    "build": "yarn copy-license && vite build",
+    "copy-readme": "node -e \"require('fs').copyFileSync('../README.md','README.md')\"",
+    "build": "yarn copy-license && yarn copy-readme && vite build",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist LICENSE"
+    "clean": "rimraf dist LICENSE README.md"
   },
   "peerDependencies": {
     "react": ">=18",
