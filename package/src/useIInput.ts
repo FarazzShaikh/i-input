@@ -32,11 +32,6 @@ export interface UseUniversalInputOptions {
   // Scrub
   scrub?: boolean;
   scrubSensitivity?: number;
-  /**
-   * Axis the scrub gesture follows. `"free"` (default) responds to both axes
-   * (drag right / up to increase). `"x"` is horizontal-only, `"y"` is
-   * vertical-only.
-   */
   scrubDirection?: "x" | "y" | "free";
 
   // Limits

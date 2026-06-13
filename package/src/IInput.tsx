@@ -107,14 +107,8 @@ export function UniversalInput({
     borderRadius: 6,
     color: "#ddd",
     fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
-    // 16px avoids iOS Safari auto-zooming the page when the field is focused,
-    // and is a comfortable default touch target / reading size.
     fontSize: 16,
     overscrollBehavior: "contain",
-    // While scrubbing is enabled we fully own the touch gesture so the page
-    // doesn't pan/scroll. `none` is required (not pan-x/pan-y) because iOS
-    // Safari otherwise still claims the gesture and swallows pointermove,
-    // making every touch resolve as a tap (instant edit) instead of a drag.
     touchAction: editing || disabled || !scrub ? "auto" : "none",
     cursor: editing
       ? "text"
