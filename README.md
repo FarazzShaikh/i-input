@@ -5,7 +5,7 @@ A Blender-style universal number input for React.
 Try it live:
 <a href="https://farazzshaikh.github.io/i-input/" target="_blank">https://farazzshaikh.github.io/i-input/</a>
 
-<a href="https://farazzshaikh.github.io/i-input/" target="_blank"><video src="media/recording.mp4" autoplay loop muted playsinline></video></a>
+<video loop autoplay muted src="https://github.com/user-attachments/assets/2c108fa5-fd00-4415-8b68-9f100f865836"></video>
 
 Drag-to-scrub, inline math
 expressions (`3 * 2 + 1`), pluggable unit systems (`5km`, `3ft 2in`,
