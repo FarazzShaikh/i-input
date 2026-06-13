@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "yarn workspace i-input build",
+    "build:example": "yarn workspace example build",
     "dev": "yarn workspace example dev",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "lint": "yarn workspaces foreach -A run lint",
