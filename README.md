@@ -234,7 +234,7 @@ clashes); if no `unitSystem` is given, they form a standalone unitless system.
   unit="m"
   unitSystem={distanceUnits}
   customUnits={[{ names: ["px", "pixel", "pixels"], toBase: 0.0002645833 }]}
-/>;
+/>
 // now "100px" parses alongside "5km", "3ft 2in", ...
 ```
 
@@ -246,12 +246,12 @@ into the system's base.
 
 Exported alongside the component and hook:
 
-| Export                                                | Kind      | Description                                                                                  |
-| ----------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------- |
-| `distanceUnits`                                       | `UnitSystem` | Built-in distance system (base = meter): km, m, cm, mm, mi, yd, ft, in, …                  |
-| `extendUnitSystem(system, custom)`                    | function  | Returns a new `UnitSystem` with `custom` units appended (later definitions win on clashes).  |
-| `findUnit(system, name)`                              | function  | Look up a `UnitDefinition` by any of its names (case-insensitive); `null` if not found.      |
-| `formatComposite(value, system, valueUnit, parts)`    | function  | Format a value across multiple units, e.g. `5' 10.87"` or `1h 23m`.                          |
+| Export                                             | Kind         | Description                                                                                 |
+| -------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------- |
+| `distanceUnits`                                    | `UnitSystem` | Built-in distance system (base = meter): km, m, cm, mm, mi, yd, ft, in, …                   |
+| `extendUnitSystem(system, custom)`                 | function     | Returns a new `UnitSystem` with `custom` units appended (later definitions win on clashes). |
+| `findUnit(system, name)`                           | function     | Look up a `UnitDefinition` by any of its names (case-insensitive); `null` if not found.     |
+| `formatComposite(value, system, valueUnit, parts)` | function     | Format a value across multiple units, e.g. `5' 10.87"` or `1h 23m`.                         |
 
 ```tsx
 import { findUnit, formatComposite, distanceUnits } from "i-input";
