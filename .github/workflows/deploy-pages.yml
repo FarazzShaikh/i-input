@@ -1,47 +1,48 @@
-name: Deploy example to GitHub Pages
+name: Deploy
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
-
-# Allow the action to push to the gh-pages branch.
-permissions:
-  contents: write
-
-# Only run one deployment at a time; don't cancel in-progress runs.
-concurrency:
-  group: gh-pages
-  cancel-in-progress: false
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Enable Corepack (Yarn 4)
-        run: corepack enable
-
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
+
+      - name: Build
+        run: |
+          yarn
+          yarn build
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v4
         with:
-          node-version: 20
-          cache: yarn
+          name: production-files
+          path: ./examples/dist
 
-      - name: Install dependencies
-        run: yarn install --immutable
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
-      - name: Build library
-        run: yarn workspace i-input build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./examples/dist
 
-      - name: Build example
-        run: yarn workspace example build
-
-      - name: Publish to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: example/dist
-          publish_branch: gh-pages
+          publish_dir: ./examples/dist
