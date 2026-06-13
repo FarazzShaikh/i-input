@@ -5,19 +5,17 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Allow the GITHUB_TOKEN to deploy to Pages.
+# Allow the action to push to the gh-pages branch.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Only run one deployment at a time; don't cancel in-progress runs.
 concurrency:
-  group: pages
+  group: gh-pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,21 +38,10 @@ jobs:
 
       - name: Build example
         run: yarn workspace example build
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}/
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: example/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: example/dist
+          publish_branch: gh-pages
