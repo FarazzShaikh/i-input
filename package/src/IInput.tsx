@@ -1,0 +1,222 @@
+import type React from "react";
+import {
+  useUniversalInput,
+  type UniversalInputHook,
+  type UseUniversalInputOptions,
+} from "./useIInput";
+
+export {
+  useUniversalInput,
+  type UniversalInputActions,
+  type UniversalInputHook,
+  type UniversalInputState,
+  type UseUniversalInputOptions,
+} from "./useIInput";
+
+export {
+  distanceUnits,
+  extendUnitSystem,
+  findUnit,
+  formatComposite,
+  type CompositePart,
+  type UnitDefinition,
+  type UnitSystem,
+} from "./utils/units";
+
+export interface UniversalInputStyles {
+  root?: React.CSSProperties;
+  input?: React.CSSProperties;
+  display?: React.CSSProperties;
+  rootInvalid?: React.CSSProperties;
+  inputInvalid?: React.CSSProperties;
+}
+
+export interface UniversalInputClassNames {
+  root?: string;
+  input?: string;
+  display?: string;
+  rootInvalid?: string;
+  inputInvalid?: string;
+}
+
+export type UniversalInputProps = UseUniversalInputOptions & {
+  children?: (
+    state: UniversalInputHook["state"],
+    actions: UniversalInputHook["actions"],
+  ) => React.ReactNode;
+
+  // Styling
+  styles?: UniversalInputStyles;
+  classNames?: UniversalInputClassNames;
+
+  // Shortcut for root styles/class when no input/display customization is needed.
+  style?: React.CSSProperties;
+  className?: string;
+
+  // Other
+  name?: string;
+  id?: string;
+  placeholder?: string;
+  autoFocus?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  autoComplete?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean;
+  tabIndex?: number;
+};
+
+export function UniversalInput({
+  children,
+  styles,
+  classNames,
+  style,
+  className,
+  name,
+  id,
+  placeholder,
+  autoFocus,
+  readOnly,
+  required,
+  autoComplete,
+  inputMode,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
+  tabIndex,
+  ...props
+}: UniversalInputProps) {
+  const { bindRoot, bindInput, state, actions } = useUniversalInput(props);
+  const { disabled = false, scrub = true, scrubDirection = "free" } = props;
+  const { editing, display, displayUnit, isTextValid } = state;
+  const invalid = editing && !isTextValid;
+
+  const rootStyle: React.CSSProperties = {
+    position: "relative",
+    display: "inline-flex",
+    alignItems: "center",
+    height: 32,
+    minWidth: 150,
+    padding: "0 10px",
+    background: "#2a2a2a",
+    border: "1px solid #3b3b3b",
+    borderRadius: 6,
+    color: "#ddd",
+    fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
+    // 16px avoids iOS Safari auto-zooming the page when the field is focused,
+    // and is a comfortable default touch target / reading size.
+    fontSize: 16,
+    overscrollBehavior: "contain",
+    // While scrubbing is enabled we fully own the touch gesture so the page
+    // doesn't pan/scroll. `none` is required (not pan-x/pan-y) because iOS
+    // Safari otherwise still claims the gesture and swallows pointermove,
+    // making every touch resolve as a tap (instant edit) instead of a drag.
+    touchAction: editing || disabled || !scrub ? "auto" : "none",
+    cursor: editing
+      ? "text"
+      : disabled
+        ? "not-allowed"
+        : !scrub
+          ? "text"
+          : scrubDirection === "y"
+            ? "ns-resize"
+            : scrubDirection === "free"
+              ? "move"
+              : "ew-resize",
+    userSelect: "none",
+    boxSizing: "border-box",
+    opacity: disabled ? 0.5 : 1,
+    overflow: "hidden",
+    borderColor: "transparent",
+    ...styles?.root,
+    ...(invalid
+      ? styles?.rootInvalid || {
+          color: "#f66",
+          borderColor: "#f66",
+        }
+      : null),
+    ...style,
+  };
+
+  const inputStyle: React.CSSProperties = {
+    flex: 1,
+    width: "100%",
+    minWidth: 0,
+    background: "transparent",
+    border: "none",
+    outline: "none",
+    color: "inherit",
+    font: "inherit",
+    padding: 0,
+    textAlign: "center",
+    overscrollBehavior: "contain",
+    ...styles?.input,
+    ...(invalid ? styles?.inputInvalid : null),
+  };
+
+  const displayStyle: React.CSSProperties = {
+    position: "relative",
+    zIndex: 1,
+    flex: 1,
+    textAlign: "center",
+    pointerEvents: "none",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    ...styles?.display,
+  };
+
+  return (
+    <div
+      {...bindRoot}
+      tabIndex={tabIndex}
+      aria-disabled={disabled || undefined}
+      className={
+        [
+          classNames?.root,
+          invalid ? classNames?.rootInvalid : undefined,
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ") || undefined
+      }
+      style={rootStyle}
+    >
+      {children?.(state, actions)}
+
+      {editing ? (
+        <input
+          {...bindInput}
+          size={1}
+          name={name}
+          id={id}
+          placeholder={placeholder}
+          autoFocus={autoFocus}
+          readOnly={readOnly}
+          required={required}
+          autoComplete={autoComplete ?? "off"}
+          inputMode={inputMode}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid ?? (invalid || undefined)}
+          className={
+            [classNames?.input, invalid ? classNames?.inputInvalid : undefined]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
+          style={inputStyle}
+        />
+      ) : (
+        <span className={classNames?.display} style={displayStyle}>
+          {display}
+          {displayUnit ? ` ${displayUnit}` : ""}
+        </span>
+      )}
+    </div>
+  );
+}

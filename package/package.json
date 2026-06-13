@@ -1,0 +1,67 @@
+{
+  "name": "i-input",
+  "version": "0.1.0",
+  "description": "A Blender-style universal number input for React with scrubbing, expression evaluation, and unit support.",
+  "license": "MIT",
+  "author": {
+    "name": "Faraz Shaikh",
+    "email": "farazzshaikh@gmail.com",
+    "url": "https://farazzshaikh.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FarazzShaikh/i-input.git"
+  },
+  "homepage": "https://github.com/FarazzShaikh/i-input#readme",
+  "bugs": {
+    "url": "https://github.com/FarazzShaikh/i-input/issues"
+  },
+  "keywords": [
+    "react",
+    "input",
+    "number",
+    "blender",
+    "scrub",
+    "drag",
+    "units",
+    "expression"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.0.3"
+  }
+}
