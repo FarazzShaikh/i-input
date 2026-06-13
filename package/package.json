@@ -39,14 +39,15 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "LICENSE"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "vite build",
+    "copy-license": "node -e \"require('fs').copyFileSync('../LICENSE','LICENSE')\"",
+    "build": "yarn copy-license && vite build",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist LICENSE"
   },
   "peerDependencies": {
     "react": ">=18",

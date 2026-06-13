@@ -122,7 +122,7 @@ function ThemedApp() {
             Input
           </h1>
           <p className="app-tagline">
-            An intelegent universal numeric input for React.
+            A Blender-style universal number input for React
           </p>
         </div>
 
