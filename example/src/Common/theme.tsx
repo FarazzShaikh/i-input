@@ -1,4 +1,4 @@
-import type { UniversalInputClassNames } from "i-input";
+import type { IInputClassNames } from "i-input";
 import {
   createContext,
   useContext,
@@ -24,10 +24,10 @@ export interface ThemePalette {
   sectionDivider: string;
   accent: string;
   accentGlow: string;
-  /** Classes passed to every UniversalInput so the library matches the theme. */
-  inputClassNames: UniversalInputClassNames;
+  /** Classes passed to every IInput so the library matches the theme. */
+  inputClassNames: IInputClassNames;
   /** Accent "pill" classes for the custom-styled input demo. */
-  accentInputClassNames: UniversalInputClassNames;
+  accentInputClassNames: IInputClassNames;
 }
 
 const dark: ThemePalette = {

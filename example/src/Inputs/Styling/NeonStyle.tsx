@@ -1,4 +1,4 @@
-import { UniversalInput } from "i-input";
+import { IInput } from "i-input";
 import { useState } from "react";
 import { Field } from "../../Common";
 
@@ -6,7 +6,7 @@ export function NeonStyle({ tabIndex }: { tabIndex?: number }) {
   const [value, setValue] = useState(99);
   return (
     <Field label="Neon" hint="glowing outline">
-      <UniversalInput
+      <IInput
         value={value}
         onChange={setValue}
         tabIndex={tabIndex}

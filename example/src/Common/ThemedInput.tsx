@@ -1,17 +1,17 @@
-import { UniversalInput, type UniversalInputProps } from "i-input";
+import { IInput, type IInputProps } from "i-input";
 import { useTheme } from "./theme";
 
 /**
- * Wraps the library's UniversalInput and injects the active theme's
+ * Wraps the library's IInput and injects the active theme's
  * `classNames`, so light/dark mode is driven entirely through the library's
  * className props. Per-instance `classNames` are appended after the theme's.
  */
-export function ThemedInput({ classNames, ...props }: UniversalInputProps) {
+export function ThemedInput({ classNames, ...props }: IInputProps) {
   const { palette } = useTheme();
   const join = (a?: string, b?: string) =>
     [a, b].filter(Boolean).join(" ") || undefined;
   return (
-    <UniversalInput
+    <IInput
       {...props}
       classNames={{
         ...classNames,

@@ -1,4 +1,4 @@
-import { UniversalInput } from "i-input";
+import { IInput } from "i-input";
 import { useState } from "react";
 import { Field } from "../../Common";
 
@@ -20,7 +20,7 @@ export function GlassStyle({ tabIndex }: { tabIndex?: number }) {
             "linear-gradient(135deg, #6d28d9, #2563eb)",
         }}
       >
-        <UniversalInput
+        <IInput
           value={value}
           onChange={setValue}
           tabIndex={tabIndex}

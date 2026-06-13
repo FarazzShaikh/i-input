@@ -1,4 +1,4 @@
-import { UniversalInput } from "i-input";
+import { IInput } from "i-input";
 import { useState } from "react";
 import { Field } from "../../Common";
 
@@ -6,7 +6,7 @@ export function TerminalStyle({ tabIndex }: { tabIndex?: number }) {
   const [value, setValue] = useState(1337);
   return (
     <Field label="Terminal" hint="monospace green">
-      <UniversalInput
+      <IInput
         value={value}
         onChange={setValue}
         tabIndex={tabIndex}

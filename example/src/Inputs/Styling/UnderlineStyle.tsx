@@ -1,4 +1,4 @@
-import { UniversalInput } from "i-input";
+import { IInput } from "i-input";
 import { useState } from "react";
 import { Field } from "../../Common";
 
@@ -6,7 +6,7 @@ export function UnderlineStyle({ tabIndex }: { tabIndex?: number }) {
   const [value, setValue] = useState(3.5);
   return (
     <Field label="Underline" hint="minimal">
-      <UniversalInput
+      <IInput
         value={value}
         onChange={setValue}
         step={0.5}

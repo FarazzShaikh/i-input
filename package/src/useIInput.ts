@@ -15,7 +15,7 @@ import {
 } from "./utils";
 import type { UnitDefinition, UnitSystem } from "./utils/units";
 
-export interface UseUniversalInputOptions {
+export interface UseIInputOptions {
   value: number;
   onChange: (value: number) => void;
   step?: number;
@@ -47,7 +47,7 @@ export interface UseUniversalInputOptions {
   customUnits?: UnitDefinition[];
 }
 
-export interface UniversalInputState {
+export interface IInputState {
   editing: boolean;
   hovering: boolean;
   dragging: boolean;
@@ -58,15 +58,15 @@ export interface UniversalInputState {
   normalized: number;
 }
 
-export interface UniversalInputActions {
+export interface IInputActions {
   stepBy: (dir: -1 | 1) => void;
   negate: () => void;
   set: (value: number) => void;
 }
 
-export interface UniversalInputHook {
-  state: UniversalInputState;
-  actions: UniversalInputActions;
+export interface IInputHook {
+  state: IInputState;
+  actions: IInputActions;
   bindRoot: React.HTMLAttributes<HTMLDivElement> & {
     ref: React.RefCallback<HTMLDivElement>;
   };
@@ -79,9 +79,7 @@ const HARD_DEFAULT_MIN = -Infinity;
 const HARD_DEFAULT_MAX = Infinity;
 const DRAG_THRESHOLD_PX = 3;
 
-export function useUniversalInput(
-  options: UseUniversalInputOptions,
-): UniversalInputHook {
+export function useIInput(options: UseIInputOptions): IInputHook {
   const {
     value,
     onChange,

@@ -1,5 +1,5 @@
 /**
- * Unit system support for `UniversalInput`.
+ * Unit system support for `IInput`.
  *
  * A `UnitSystem` defines:
  *   - a base unit (used to store / emit values), and
@@ -180,7 +180,7 @@ export function findUnit(
 
 /**
  * Format a base-unit numeric value for display using the first base name.
- * Used by `UniversalInput` when no explicit `unit` prop is provided.
+ * Used by `IInput` when no explicit `unit` prop is provided.
  */
 export function formatBase(value: number, system: UnitSystem): string {
   return `${value} ${system.baseNames[0]}`;

@@ -11,7 +11,7 @@ Drag-to-scrub, inline math
 expressions (`3 * 2 + 1`), pluggable unit systems (`5km`, `3ft 2in`,
 `1m + 2cm`), soft/hard limits, value rollover, and fully custom rendering.
 
-Ships a styled `<UniversalInput />` component and a headless `useUniversalInput`
+Ships a styled `<IInput />` component and a headless `useIInput`
 hook.
 
 ## Contents
@@ -19,9 +19,9 @@ hook.
 - [Install](#install)
 - [Quick start](#quick-start)
 - [Options](#options) — shared props for the component and hook
-- [`UniversalInput` component](#universalinput-component) — extra props
+- [`IInput` component](#iinput-component) — extra props
 - [Custom rendering (child function)](#custom-rendering-child-function)
-- [`useUniversalInput` hook](#useuniversalinput-hook)
+- [`useIInput` hook](#useiinput-hook)
 - [Units](#units)
 - [Helpers](#helpers)
 - [Interactions](#interactions)
@@ -42,17 +42,17 @@ yarn add i-input
 
 ```tsx
 import { useState } from "react";
-import { UniversalInput } from "i-input";
+import { IInput } from "i-input";
 
 function Example() {
   const [value, setValue] = useState(0);
-  return <UniversalInput value={value} onChange={setValue} />;
+  return <IInput value={value} onChange={setValue} />;
 }
 ```
 
 ## Options
 
-Accepted by both the `UniversalInput` component and the `useUniversalInput`
+Accepted by both the `IInput` component and the `useIInput`
 hook.
 
 | Name               | Type                                     | Default   | Description                                                                       |
@@ -75,7 +75,7 @@ hook.
 | `customUnits`      | `UnitDefinition[]`                       | —         | Extra units appended to `unitSystem` (or used standalone).                        |
 | `formatDisplay`    | `(info) => string`                       | —         | Custom display formatter. `info` = `{ value, unit, unitSystem, defaultDisplay }`. |
 
-## `UniversalInput` component
+## `IInput` component
 
 Renders a styled, interactive input. Accepts every [option](#options) above
 plus the following.
@@ -83,8 +83,8 @@ plus the following.
 | Name           | Type                                            | Default | Description                                                            |
 | -------------- | ----------------------------------------------- | ------- | ---------------------------------------------------------------------- |
 | `children`     | `(state, actions) => ReactNode`                 | —       | Render overlay content. See [below](#custom-rendering-child-function). |
-| `styles`       | `UniversalInputStyles`                          | —       | Inline style overrides per part (see table below).                     |
-| `classNames`   | `UniversalInputClassNames`                      | —       | Class name overrides per part (same keys as `styles`).                 |
+| `styles`       | `IInputStyles`                                  | —       | Inline style overrides per part (see table below).                     |
+| `classNames`   | `IInputClassNames`                              | —       | Class name overrides per part (same keys as `styles`).                 |
 | `style`        | `CSSProperties`                                 | —       | Shortcut for `styles.root`.                                            |
 | `className`    | `string`                                        | —       | Shortcut for `classNames.root`.                                        |
 | `placeholder`  | `string`                                        | —       | Input placeholder while editing.                                       |
@@ -110,7 +110,7 @@ plus the following.
 | `inputInvalid` | The input when the typed text is invalid. |
 
 ```tsx
-<UniversalInput
+<IInput
   value={value}
   onChange={setValue}
   styles={{
@@ -126,7 +126,7 @@ Pass a function as `children` to render overlay content (fill bars, icons,
 buttons…) on top of the input. It receives the current `state` and `actions`.
 
 ```tsx
-<UniversalInput value={value} onChange={setValue} hardMin={0} hardMax={100}>
+<IInput value={value} onChange={setValue} hardMin={0} hardMax={100}>
   {(state, actions) => (
     <>
       {/* a fill bar driven by the normalized value */}
@@ -143,21 +143,21 @@ buttons…) on top of the input. It receives the current `state` and `actions`.
       {state.hovering && <button onClick={() => actions.stepBy(1)}>+</button>}
     </>
   )}
-</UniversalInput>
+</IInput>
 ```
 
 `state` and `actions` are the same objects the hook returns — see below.
 
-## `useUniversalInput` hook
+## `useIInput` hook
 
 For full control over markup, use the headless hook. It accepts every
 [option](#options) and returns binding props plus state and actions.
 
 ```tsx
-import { useUniversalInput } from "i-input";
+import { useIInput } from "i-input";
 
 function MyInput(props) {
-  const { bindRoot, bindInput, state } = useUniversalInput(props);
+  const { bindRoot, bindInput, state } = useIInput(props);
   return (
     <div {...bindRoot}>
       {state.editing ? <input {...bindInput} /> : <span>{state.display}</span>}
@@ -168,12 +168,12 @@ function MyInput(props) {
 
 ### Returns
 
-| Property    | Type                    | Description                                          |
-| ----------- | ----------------------- | ---------------------------------------------------- |
-| `bindRoot`  | props + `ref`           | Spread onto your wrapper element.                    |
-| `bindInput` | props + `ref`           | Spread onto your `<input>` (rendered while editing). |
-| `state`     | `UniversalInputState`   | Current state (see below).                           |
-| `actions`   | `UniversalInputActions` | Imperative helpers (see below).                      |
+| Property    | Type            | Description                                          |
+| ----------- | --------------- | ---------------------------------------------------- |
+| `bindRoot`  | props + `ref`   | Spread onto your wrapper element.                    |
+| `bindInput` | props + `ref`   | Spread onto your `<input>` (rendered while editing). |
+| `state`     | `IInputState`   | Current state (see below).                           |
+| `actions`   | `IInputActions` | Imperative helpers (see below).                      |
 
 ### `state`
 
@@ -202,9 +202,9 @@ A `UnitSystem` defines a base unit and the units recognized when parsing and
 displaying. A built-in `distanceUnits` system (base = meter) is provided.
 
 ```tsx
-import { UniversalInput, distanceUnits } from "i-input";
+import { IInput, distanceUnits } from "i-input";
 
-<UniversalInput
+<IInput
   value={meters}
   onChange={setMeters}
   unit="m"
@@ -233,7 +233,7 @@ clashes); if no `unitSystem` is given, they form a standalone unitless system.
 
 ```tsx
 // extend the built-in distance system with a CSS pixel
-<UniversalInput
+<IInput
   value={meters}
   onChange={setMeters}
   unit="m"
@@ -272,9 +272,9 @@ parts are floored to whole counts and the final part absorbs the remainder.
 
 ### Types
 
-Exported types: `UniversalInputProps`, `UseUniversalInputOptions`,
-`UniversalInputState`, `UniversalInputActions`, `UniversalInputHook`,
-`UniversalInputStyles`, `UniversalInputClassNames`, `UnitSystem`,
+Exported types: `IInputProps`, `UseIInputOptions`,
+`IInputState`, `IInputActions`, `IInputHook`,
+`IInputStyles`, `IInputClassNames`, `UnitSystem`,
 `UnitDefinition`, `CompositePart`.
 
 ## Interactions

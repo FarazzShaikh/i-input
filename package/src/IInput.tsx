@@ -1,16 +1,12 @@
 import type React from "react";
-import {
-  useUniversalInput,
-  type UniversalInputHook,
-  type UseUniversalInputOptions,
-} from "./useIInput";
+import { useIInput, type IInputHook, type UseIInputOptions } from "./useIInput";
 
 export {
-  useUniversalInput,
-  type UniversalInputActions,
-  type UniversalInputHook,
-  type UniversalInputState,
-  type UseUniversalInputOptions,
+  useIInput,
+  type IInputActions,
+  type IInputHook,
+  type IInputState,
+  type UseIInputOptions,
 } from "./useIInput";
 
 export {
@@ -23,7 +19,7 @@ export {
   type UnitSystem,
 } from "./utils/units";
 
-export interface UniversalInputStyles {
+export interface IInputStyles {
   root?: React.CSSProperties;
   input?: React.CSSProperties;
   display?: React.CSSProperties;
@@ -31,7 +27,7 @@ export interface UniversalInputStyles {
   inputInvalid?: React.CSSProperties;
 }
 
-export interface UniversalInputClassNames {
+export interface IInputClassNames {
   root?: string;
   input?: string;
   display?: string;
@@ -39,15 +35,15 @@ export interface UniversalInputClassNames {
   inputInvalid?: string;
 }
 
-export type UniversalInputProps = UseUniversalInputOptions & {
+export type IInputProps = UseIInputOptions & {
   children?: (
-    state: UniversalInputHook["state"],
-    actions: UniversalInputHook["actions"],
+    state: IInputHook["state"],
+    actions: IInputHook["actions"],
   ) => React.ReactNode;
 
   // Styling
-  styles?: UniversalInputStyles;
-  classNames?: UniversalInputClassNames;
+  styles?: IInputStyles;
+  classNames?: IInputClassNames;
 
   // Shortcut for root styles/class when no input/display customization is needed.
   style?: React.CSSProperties;
@@ -69,7 +65,7 @@ export type UniversalInputProps = UseUniversalInputOptions & {
   tabIndex?: number;
 };
 
-export function UniversalInput({
+export function IInput({
   children,
   styles,
   classNames,
@@ -89,8 +85,8 @@ export function UniversalInput({
   "aria-invalid": ariaInvalid,
   tabIndex,
   ...props
-}: UniversalInputProps) {
-  const { bindRoot, bindInput, state, actions } = useUniversalInput(props);
+}: IInputProps) {
+  const { bindRoot, bindInput, state, actions } = useIInput(props);
   const { disabled = false, scrub = true, scrubDirection = "free" } = props;
   const { editing, display, displayUnit, isTextValid } = state;
   const invalid = editing && !isTextValid;

@@ -1,8 +1,8 @@
-import type { UniversalInputState } from "i-input";
+import type { IInputState } from "i-input";
 
 /**
  * A small overlay icon shown on the right of an input while a scrub drag is
- * active. Render it from a UniversalInput render-prop child:
+ * active. Render it from a IInput render-prop child:
  *
  *   <ThemedInput ...>
  *     {(state) => <ScrubIndicator state={state} direction="free" />}
@@ -12,7 +12,7 @@ export function ScrubIndicator({
   state,
   direction = "free",
 }: {
-  state: UniversalInputState;
+  state: IInputState;
   direction?: "x" | "y" | "free";
 }) {
   if (!state.dragging) return null;
