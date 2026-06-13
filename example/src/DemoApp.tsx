@@ -1,7 +1,13 @@
 import { distanceUnits, formatComposite } from "i-input";
 import { useState } from "react";
 import "./App.css";
-import { Field, ThemedInput, ThemeProvider, useTheme } from "./Common";
+import {
+  Field,
+  StepButton,
+  ThemedInput,
+  ThemeProvider,
+  useTheme,
+} from "./Common";
 
 /**
  * A standalone, square demo page intended for screen recordings / social media.
@@ -70,8 +76,8 @@ function DemoStage() {
 function Basic() {
   const [v, setV] = useState(42);
   return (
-    <Field label="Scrub" hint="drag to change">
-      <ThemedInput value={v} onChange={setV} />
+    <Field label="Basic" hint="Basic input">
+      <ThemedInput value={v} onChange={setV} scrub={false} />
     </Field>
   );
 }
@@ -80,7 +86,23 @@ function Stepped() {
   const [v, setV] = useState(1.5);
   return (
     <Field label="Step" hint="step = 0.25">
-      <ThemedInput value={v} onChange={setV} step={0.25} precision={2} />
+      <ThemedInput value={v} onChange={setV} step={0.25} precision={2}>
+        {(state, actions) => {
+          const { editing, hovering, dragging } = state;
+          const showArrows = hovering && !editing && !dragging;
+          if (!showArrows) return null;
+          return (
+            <>
+              <StepButton side="left" onClick={() => actions.stepBy(-1)}>
+                ‹
+              </StepButton>
+              <StepButton side="right" onClick={() => actions.stepBy(1)}>
+                ›
+              </StepButton>
+            </>
+          );
+        }}
+      </ThemedInput>
     </Field>
   );
 }

@@ -2,6 +2,11 @@
 
 A Blender-style universal number input for React.
 
+Try it live:
+<a href="https://farazzshaikh.github.io/i-input/" target="_blank">https://farazzshaikh.github.io/i-input/</a>
+
+<a href="https://farazzshaikh.github.io/i-input/" target="_blank"><video src="media/recording.mp4" autoplay loop muted playsinline></video></a>
+
 Drag-to-scrub, inline math
 expressions (`3 * 2 + 1`), pluggable unit systems (`5km`, `3ft 2in`,
 `1m + 2cm`), soft/hard limits, value rollover, and fully custom rendering.
