@@ -165,6 +165,10 @@ export function IInput({
       {...bindRoot}
       tabIndex={tabIndex}
       aria-disabled={disabled || undefined}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
+      aria-invalid={ariaInvalid ?? (invalid || undefined)}
       className={
         [
           classNames?.root,
@@ -190,10 +194,6 @@ export function IInput({
           required={required}
           autoComplete={autoComplete ?? "off"}
           inputMode={inputMode}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledBy}
-          aria-describedby={ariaDescribedBy}
-          aria-invalid={ariaInvalid ?? (invalid || undefined)}
           className={
             [classNames?.input, invalid ? classNames?.inputInvalid : undefined]
               .filter(Boolean)

@@ -4,7 +4,7 @@ import { Field, StepButton, ThemedInput } from "../../Common";
 export function StepButtons({ tabIndex }: { tabIndex?: number }) {
   const [value, setValue] = useState(3);
   return (
-    <Field label="Step buttons" hint="‹ › arrows appear on hover">
+    <Field label="Step buttons" hint="‹ › arrows to step up/down">
       <ThemedInput
         value={value}
         onChange={setValue}
@@ -12,8 +12,8 @@ export function StepButtons({ tabIndex }: { tabIndex?: number }) {
         tabIndex={tabIndex}
       >
         {(state, actions) => {
-          const { editing, hovering, dragging } = state;
-          const showArrows = hovering && !editing && !dragging;
+          const { editing, dragging } = state;
+          const showArrows = !editing && !dragging;
           if (!showArrows) return null;
           return (
             <>

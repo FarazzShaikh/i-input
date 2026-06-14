@@ -311,24 +311,20 @@ export function useIInput(options: UseIInputOptions): IInputHook {
       commitEdit();
       return;
     }
-
     if (event.key === "Escape" && editing) {
       event.preventDefault();
       stopEditing();
       return;
     }
-
     if (event.key === "Tab" && editing) {
       commitEdit();
       return;
     }
-
     if (event.key === "-" && !editing && !disabled) {
       event.preventDefault();
       negate();
       return;
     }
-
     if ((event.key === "ArrowUp" || event.key === "ArrowDown") && !editing) {
       event.preventDefault();
       stepBy(event.key === "ArrowUp" ? 1 : -1);
@@ -348,6 +344,10 @@ export function useIInput(options: UseIInputOptions): IInputHook {
     onPointerEnter: () => setHovering(true),
     onPointerLeave: () => setHovering(false),
     onKeyDown,
+    onFocus: (event) => {
+      if (event.target !== event.currentTarget) return;
+      if (!editing) startEditing(true);
+    },
   };
 
   const bindInput: React.InputHTMLAttributes<HTMLInputElement> & {

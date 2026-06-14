@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Field, ThemedInput } from "../../Common";
+import { Field, StepButton, ThemedInput } from "../../Common";
 
 export function Step({ tabIndex }: { tabIndex?: number }) {
   const [value, setValue] = useState(0);
@@ -11,7 +11,23 @@ export function Step({ tabIndex }: { tabIndex?: number }) {
         step={5}
         scrub={false}
         tabIndex={tabIndex}
-      />
+      >
+        {(state, actions) => {
+          const { editing, dragging } = state;
+          const showArrows = !editing && !dragging;
+          if (!showArrows) return null;
+          return (
+            <>
+              <StepButton side="left" onClick={() => actions.stepBy(-1)}>
+                ‹
+              </StepButton>
+              <StepButton side="right" onClick={() => actions.stepBy(1)}>
+                ›
+              </StepButton>
+            </>
+          );
+        }}
+      </ThemedInput>
     </Field>
   );
 }
