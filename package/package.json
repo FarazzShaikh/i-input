@@ -1,6 +1,6 @@
 {
   "name": "i-input",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Blender-style universal number input for React with scrubbing, expression evaluation, and unit support.",
   "license": "MIT",
   "author": {
